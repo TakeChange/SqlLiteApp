@@ -18,11 +18,7 @@ const AppNavigator = () => {
                     component={Splash}
                     options={{ headerShown:false }}
                 />
-                <Stack.Screen
-                    name='demo'
-                    component={Demo}
-                    options={{ headerShown:false }}
-                />
+               
                 <Stack.Screen
                     name='FirstScreen'
                     component={FirstScreen}
