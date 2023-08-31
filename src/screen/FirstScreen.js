@@ -45,7 +45,7 @@ const FirstScreen1 = ({ navigation }) => {
             keyExtractor={(item) => item.Employee}
           />
           <View style={{marginTop:'45%',marginLeft:'75%'}}>
-                  <TouchableOpacity onPress={()=>navigation.navigate('AddEmployee')}>
+                  <TouchableOpacity onPress={()=>navigation.navigate('SecondScreen')}>
                   <Ionicons name='add-circle' color='#1D1E20' size={60} />
                   </TouchableOpacity>
               </View>
