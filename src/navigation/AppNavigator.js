@@ -5,6 +5,7 @@ import Splash from '../screen/Splash'
 import Demo from './Demo'
 import FirstScreen from '../screen/FirstScreen'
 import SecondScreen from '../screen/SecondScreen'
+import ThirdScreen from '../screen/ThirdScreen'
 const AppNavigator = () => {
     const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,11 @@ const AppNavigator = () => {
                  <Stack.Screen
                     name='SecondScreen'
                     component={SecondScreen}
+                    options={{ headerShown:false }}
+                />
+                <Stack.Screen
+                    name='UpdateEmp'
+                    component={ThirdScreen}
                     options={{ headerShown:false }}
                 />
                 
