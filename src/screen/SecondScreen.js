@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, } from 'react-native'
 import React from 'react'
 
 
-const SecondScreen = () => {
+const SecondScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, margin: 15 }}>
       <Text style={{ fontSize: 17, fontWeight: '900', color: 'black', textAlign: 'center', marginTop: '15%' }}>Add Employee</Text>
@@ -31,7 +31,8 @@ const SecondScreen = () => {
         borderWidth: 2,
         justifyContent: 'center',
         marginTop: '30%'
-      }}>
+      }} onPress={()=>navigation.navigate('FirstScreen')}>
+         
         <Text style={{
           textAlign: 'center',
           color: '#FFFFFF',
