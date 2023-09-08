@@ -11,14 +11,12 @@ const AppNavigator = () => {
     return (
 
         <NavigationContainer>
-
             <Stack.Navigator>
                 <Stack.Screen
                     name='Splash1'
                     component={Splash}
                     options={{ headerShown:false }}
-                />
-               
+                />              
                 <Stack.Screen
                     name='FirstScreen'
                     component={FirstScreen}
@@ -33,8 +31,7 @@ const AppNavigator = () => {
                     name='UpdateEmp'
                     component={ThirdScreen}
                     options={{ headerShown:false }}
-                />
-                
+                />                
             </Stack.Navigator>
         </NavigationContainer>
 
