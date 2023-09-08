@@ -1,0 +1,142 @@
+Install dependencies 
+	  npm install --save react-native-sqlite-storage
+
+You just have to import the library like this:
+import { openDatabase } from 'react-native-sqlite-storage';
+
+and open the database using
+var db = openDatabase({ name: 'UserDatabase.db' });
+
+Create table and check they are exits or not:
+useEffect(() => {
+    db.transaction(txn => 
+    {
+      txn.executeSql(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='table_user'",
+        [],
+        (tx, res) => {
+          console.log('item:', res.rows.length);
+          if (res.rows.length == 0) 
+          {
+            txn.executeSql('DROP TABLE IF EXISTS table_user', []);
+            txn.executeSql(
+              'CREATE TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name VARCHAR(20), user_contact INT(10), user_address VARCHAR(255))',
+              []
+            );
+          }
+          else
+          {
+                console.log('Table already exits');
+          }
+        }
+      );
+    });
+  }, []);
+
+Insert Data into the table
+const InsertData = () => {
+  db.transaction(tx=> {
+    tx.executeSql(
+      'INSERT INTO table_user (user_name, user_contact, user_address) VALUES (?,?,?)',
+      [userName, userContact, userAddress],
+      (tx, results) => {
+        console.log('Results', results.rowsAffected);
+        if (results.rowsAffected > 0)
+        {
+          console.log('Data inserted successfully')
+        } 
+        else 
+        {
+            console.log('fail')
+        }
+      }
+    );
+  });
+}
+
+*** Display Data from sql lite db ***
+
+import {openDatabase} from 'react-native-sqlite-storage';
+
+let db = openDatabase({name: 'UserDatabase.db'});
+
+const isFocused = useIsFocused();
+  
+const [userList, setUserList] = useState([]);
+
+useEffect(() => {
+    getData();
+  }, [isFocused]);
+  
+  const getData = () => {
+    db.transaction(tx => {
+      tx.executeSql('SELECT * FROM table_user', [], (tx, results) => {
+        var temp = [];
+        for (let i = 0; i < results.rows.length; ++i)
+          temp.push(results.rows.item(i));
+        setUserList(temp);
+      });
+    });
+  };
+
+
+*** Delete Data from database ***
+ 
+const deleteUser = id => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'DELETE FROM  table_user where user_id=?',
+        [id],
+        (tx, results) => {
+          console.log('Results', results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            alert('record deleted successfully')
+          } else {
+            alert('Please insert a valid User Id');
+          }
+        },
+      );
+    });
+  };
+
+
+*** Update Data form sql DB ***
+
+const route = useRoute();
+
+const [email, setEmail] = useState(route.params.data.email);
+const [address, setAddress] = useState(route.params.data.address);
+
+const updateUser = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'UPDATE table_user set name=?, email=? , address=? where user_id=?',
+        [name, email, address, route.params.data.id],
+        (tx, results) => {
+          console.log('Results', results.rowsAffected);
+          if (results.rowsAffected > 0) 
+          {
+            alert('Record updated successfully');
+          } 
+          else
+          {
+            alert('Updation Failed');
+          }
+        },
+      );
+    });
+  };
+
+
+  Use Alert ::
+  Alert.alert(
+              'Success',
+              ' updated successfully',
+              [
+                {
+                  text: 'Ok',
+                  onPress: () => navigation.navigate('Home'),
+                },
+              ],
+              {cancelable: false},
+            );
